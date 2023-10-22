@@ -12,20 +12,20 @@ const mongo = require("aurora-mongo");
 require("dotenv").config();
 mongo.connect(process.env.db); //環境変数dbにmongo_keyを入れる
 const token = process.env.token; //環境変数tokenにBOT_tokenを入れる
-const kane = new mongo.Database("okane");
+const kane = new mongo.Database("money");
 const mono = new mongo.Database("mono");
-let syouhin = ["クッキー", "AV"];
-let nedan = ["100", "1000"];
+let present = ["クッキー", "AV"];
+let price = ["100", "1000"];
 client.on("message", async (message) => {
   if (message.content == "!coin") {
     if (await kane.has(message.author.id)) {
-      const authorkane = await kane.get(message.author.id);
-      console.log(authorkane);
-      let tuikanokane = 100;
-      await kane.set(message.author.id, authorkane + tuikanokane);
+      const userHavingMoney = await kane.get(message.author.id);
+      console.log(userHavingMoney);
+      let additionalMoney = 100;
+      await kane.set(message.author.id, userHavingMoney + additionalMoney);
       message.reply(
-        `お金を${tuikanokane}円追加しました\n現在の所持金は${
-          authorkane + tuikanokane
+        `お金を${additionalMoney}円追加しました\n現在の所持金は${
+          userHavingMoney + additionalMoney
         }円です`
       );
     } else {
@@ -36,13 +36,13 @@ client.on("message", async (message) => {
   }
   if (message.content == "!big_coin") {
     if (await kane.has(message.author.id)) {
-      const authorkane = await kane.get(message.author.id);
-      console.log(authorkane);
-      let tuikanokane = 10000;
-      await kane.set(message.author.id, authorkane + tuikanokane);
+      const userHavingMoney = await kane.get(message.author.id);
+      console.log(userHavingMoney);
+      let additionalMoney = 10000;
+      await kane.set(message.author.id, userHavingMoney + additionalMoney);
       message.reply(
-        `お金を${tuikanokane}円追加しました\n現在の所持金は${
-          authorkane + tuikanokane
+        `お金を${additionalMoney}円追加しました\n現在の所持金は${
+          userHavingMoney + additionalMoney
         }円です`
       );
     } else {
@@ -53,8 +53,8 @@ client.on("message", async (message) => {
   }
   if (message.content == "!shop") {
     message.reply(
-      `商品リスト\n${String(syouhin).split(",").join("\n")}\n値段\n${String(
-        nedan
+      `商品リスト\n${String(present).split(",").join("\n")}\n値段\n${String(
+        price
       )
         .split(",")
         .join("\n")}`
@@ -70,13 +70,13 @@ client.on("message", async (message) => {
     if (await kane.has(message.author.id)) {
       const args = message.content.split(" ")[1];
       if (!args) return message.reply("商品番号を入れてね");
-      const kaumono = syouhin[args];
-      const harau = nedan[args];
-      const authorgenkin = await kane.get(message.author.id);
-      if (authorgenkin >= harau) {
-        await kane.set(message.author.id, authorgenkin - harau);
-        await mono.set(message.author.id, kaumono);
-        message.reply(`商品${kaumono}を${harau}円で買いました`);
+      const somethingToBuy = present[args];
+      const pay = price[args];
+      const userHavingMoney = await kane.get(message.author.id);
+      if (userHavingMoney >= pay) {
+        await kane.set(message.author.id, userHavingMoney - pay);
+        await mono.set(message.author.id, somethingToBuy);
+        message.reply(`商品${somethingToBuy}を${pay}円で買いました`);
       } else {
         message.reply("お金が足りないよ！");
       }
@@ -86,10 +86,10 @@ client.on("message", async (message) => {
   }
   if (message.content == "!所持品") {
     if (await kane.has(message.author.id)) {
-      const motimono = await mono.get(message.author.id);
-      const syozikin = await kane.get(message.author.id);
+      const Belongings = await mono.get(message.author.id);
+      const userHavingMoney = await kane.get(message.author.id);
       message.reply(
-        `お金は${syozikin || "0"}円持ち物は${motimono || "なんもない"}`
+        `お金は${userHavingMoney || "0"}円持ち物は${Belongings || "なんもない"}`
       );
     }
   }
