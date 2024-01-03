@@ -149,7 +149,10 @@ client.on("messageCreate", async (message) => {
     )
       return;
     //supportというカテゴリーがあったらreturn
-    message.guild.channels.create({ name: "support", type: ChannelType.GuildCategory });
+    message.guild.channels.create({
+      name: "support",
+      type: ChannelType.GuildCategory,
+    });
     //supportというカテゴリーを作る
   }
 });
@@ -249,7 +252,11 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.customId === "menu") {
-    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (
+      interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      )
+    ) {
       const options = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setCustomId("transcript")
@@ -298,7 +305,11 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.customId === "transcript") {
-    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (
+      interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      )
+    ) {
       interaction.message.delete();
 
       const channel = interaction.channel; // or however you get your TextChannel
@@ -334,7 +345,11 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.customId === "lock") {
-    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (
+      interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      )
+    ) {
       let ui = interaction.channel.topic;
       if (!ui.startsWith("closed:")) {
         interaction.channel.setTopic("closed:" + ui);
@@ -375,7 +390,11 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.customId === "reopen") {
-    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+    if (
+      interaction.member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      )
+    ) {
       let ui = interaction.channel.topic;
       let ui_number = ui.replace(/[^0-9]/g, "");
       interaction.channel.setTopic(ui_number);
