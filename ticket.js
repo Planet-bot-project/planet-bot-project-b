@@ -144,12 +144,12 @@ client.on("messageCreate", async (message) => {
       components: [help_start],
     });
     //embedとbutton送信
-    if (message.guild.channels.cache.find((name) => name.name === "support"))
+    if (
+      message.guild.channels.cache.find((channel) => channel.name === "support")
+    )
       return;
     //supportというカテゴリーがあったらreturn
-    message.guild.channels.create("support", {
-      type: "GUILD_CATEGORY",
-    });
+    message.guild.channels.create({ name: "support", type: ChannelType.GuildCategory });
     //supportというカテゴリーを作る
   }
 });
