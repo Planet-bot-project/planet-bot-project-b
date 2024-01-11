@@ -43,8 +43,12 @@ client.on("ready", () => {
 
 // botがメッセージを受信すると発動され、 上から順に処理される。
 client.on("messageCreate", async (message) => {
-  // メッセージの本文が about だった場合
-  if (message.content.startsWith(`${prefix}about`)) {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+  const args = message.content.slice(prefix.length).trim().split(" ");
+  const command = args.shift().toLowerCase();
+
+  if (command == "about") {
     message.channel.send({
       embeds: [
         {
@@ -72,7 +76,7 @@ client.on("messageCreate", async (message) => {
         },
       ],
     });
-  } else if (message.content.startsWith(`${prefix}hi`)) {
+  } else if (command == "hi") {
     const help_start = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("support")
