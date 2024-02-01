@@ -7,7 +7,6 @@ http
   .listen(8080);
 
 // Discord bot implements
-const { setTimeout } = require("node:timers/promises");
 const discordTranscripts = require("discord-html-transcripts");
 const {
   Client,
@@ -174,7 +173,7 @@ client.on("interactionCreate", async (interaction) => {
       let already_channel_id = interaction.guild.channels.cache.find(
         (channel) => channel.topic === supportId
       ).id;
-      await interaction.editReply({
+      return interaction.editReply({
         content: `１人１チャンネルとさせていただいております。\n<#${already_channel_id}>が既に存在しますので、そちらをご利用ください。`,
         //メッセージ
         ephemeral: true,
@@ -459,8 +458,9 @@ client.on("interactionCreate", async (interaction) => {
     await interaction.reply("まもなく削除されます…");
     let del_ch_id = interaction.channel.id;
     let del_ch = interaction.guild.channels.cache.get(del_ch_id);
-    await setTimeout(1000);
-    del_ch.delete().catch((e) => interaction.reply(`エラー:${e.message}`));
+    setTimeout(() => {
+      del_ch.delete().catch((e) => interaction.reply(`エラー:${e.message}`));
+    }, 5000);
   }
 });
 
