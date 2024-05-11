@@ -15,3 +15,8 @@ API key の取り方は、[こちら(YouTube)](https://youtu.be/18hjrZCvxxk)を�
 - [TeX 文字列を画像に変換](https://qiita.com/metaphysical_bard/items/bf547dbab04c8b92e884)
 - [Tex 文字列の書き方](https://qiita.com/ttabata/items/92a4a72b042e6a2dbbad)
 - [TeX 文字列で使う数学記号の書き方](https://qiita.com/shepabashi/items/27b7284d1f0007af533b)
+
+# install command
+```
+npm i discord-html-transcripts discord.js dotenv express mathjax node-cron sharp yt-search
+```
