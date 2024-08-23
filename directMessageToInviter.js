@@ -10,9 +10,7 @@ http
 const {
   Client,
   GatewayIntentBits,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
+  PermissionsBitField,
   AuditLogEvent,
 } = require("discord.js");
 require("dotenv").config();
@@ -43,12 +41,23 @@ client.on("ready", () => {
 });
 
 client.on("guildCreate", async (guild) => {
-  const fetchedLogs = await guild.fetchAuditLogs({
-    type: AuditLogEvent.BotAdd,
-    limit: 1,
-  });
-  const inviterInfo = fetchedLogs.entries.first().executor;
-  console.log(`invited user: ${inviterInfo.globalName}(${inviterInfo.id})`);
+  let DMuser;
+  if (
+    guild.members.me.permissions.has(PermissionsBitField.Flags.ViewAuditLog)
+  ) {
+    const fetchedLogs = await guild.fetchAuditLogs({
+      type: AuditLogEvent.BotAdd,
+      limit: 1,
+    });
+    const inviterInfo = fetchedLogs.entries.first().executor;
+    let inviterId = inviterInfo.id;
+    DMuser = await client.users.fetch(inviterId);
+  } else {
+    let owner_id = guild.ownerId;
+    DMuser = await client.users.fetch(owner_id);
+  }
+  console.log(DMuser);
+  console.log(`invited user: ${DMuser.globalName}(${DMuser.id})`);
 });
 
 // botがメッセージを受信すると発動され、 上から順に処理される。
