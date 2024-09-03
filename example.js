@@ -76,29 +76,6 @@ client.on("messageCreate", async (message) => {
         },
       ],
     });
-  } else if (command == "support") {
-    const help_start = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId("support")
-        .setLabel("お問い合わせを始める")
-        .setStyle(ButtonStyle.Primary)
-        .setEmoji("🎫")
-    );
-    //button作る
-    await message.channel.send({
-      embeds: [
-        {
-          title: "🎫お問い合わせ🎫",
-          description:
-            "質問・要望・バグ報告がある場合は下のボタンを押してください。\nサポートチームが対応いたします。",
-          color: 0x00eaff,
-          footer: {
-            text: "↓ここをクリックして始めてください↓",
-          },
-        },
-      ],
-      components: [help_start],
-    });
   }
 });
 
