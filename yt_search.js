@@ -7,13 +7,15 @@ http
   .listen(8080);
 
 // Discord bot implements
-const yts = require("yt-search"); //yt-searchを読み込む
+const { YouTubePlugin } = require("@distube/youtube");
+const youTubePlugin = new YouTubePlugin();
 const { Client, GatewayIntentBits } = require("discord.js");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
 require("dotenv").config();
@@ -37,7 +39,7 @@ client.on("ready", () => {
 });
 
 // botがメッセージを受信すると発動され、 上から順に処理される。
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   const args = message.content.slice(prefix.length).trim().split(" ");
@@ -77,13 +79,22 @@ client.on("messageCreate", (message) => {
       return message.channel.send(
         "エラー:空白がないまたは検索内容を書いていません"
       );
-    yts(AKB, function (err, r) {
-      //検索
-      const videos = r.videos;
-      const playlists = r.playlists || r.lists;
-      const channels = r.channels || r.accounts;
-      message.channel.send(videos[0].url);
+    const results = await youTubePlugin.search(AKB, {
+      type: "video",
+      limit: 5,
     });
+    const maxTracks = results.slice(0, 10);
+
+    message.channel.send(
+      `${maxTracks
+        .map(
+          (song, i) =>
+            `**${i + 1}**. [${song.name}](${song.url}) | \`${
+              song.uploader.name
+            }\``
+        )
+        .join("\n")}`
+    );
   }
 });
 
