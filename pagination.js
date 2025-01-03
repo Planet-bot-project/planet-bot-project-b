@@ -3,6 +3,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ComponentType,
+  MessageFlags,
 } = require("discord.js");
 
 async function pagination(interaction, pages, time = 30 * 1000) {
@@ -69,7 +70,7 @@ async function pagination(interaction, pages, time = 30 * 1000) {
       if (i.user.id !== interaction.user.id)
         return await i.reply({
           content: `Only **${interaction.user.name}** can use these buttons!`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
 
       await i.deferUpdate();

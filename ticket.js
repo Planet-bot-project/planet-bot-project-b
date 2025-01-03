@@ -16,6 +16,7 @@ const {
   ButtonStyle,
   ChannelType,
   PermissionsBitField,
+  MessageFlags,
 } = require("discord.js");
 const client = new Client({
   intents: [
@@ -159,7 +160,7 @@ client.on("messageCreate", async (message) => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.customId === "support") {
     await interaction.deferReply({
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
     //supportというIDのボタンが押されたら実行
     const supportId = interaction.user.id;
@@ -176,7 +177,7 @@ client.on("interactionCreate", async (interaction) => {
       return interaction.editReply({
         content: `１人１チャンネルとさせていただいております。\n<#${already_channel_id}>が既に存在しますので、そちらをご利用ください。`,
         //メッセージ
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
         //その人にしか見れないようにする
       });
     }
@@ -243,7 +244,7 @@ client.on("interactionCreate", async (interaction) => {
         await interaction.editReply({
           content: `${channels}にてお聞きいたします。そちらのチャンネルへどうぞ！`,
           //メッセージ
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
           //押した人にしか見れないようにする
         });
       })
@@ -298,7 +299,7 @@ client.on("interactionCreate", async (interaction) => {
       //管理者権限無いとき
       await interaction.reply({
         content: "このボタンは管理者のみ有効です",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   }
@@ -376,14 +377,14 @@ client.on("interactionCreate", async (interaction) => {
       } else {
         await interaction.reply({
           content: "すでにCloseされています",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
       }
     } else {
       //管理者権限無いとき
       await interaction.reply({
         content: "このボタンは管理者のみ有効です",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   }
