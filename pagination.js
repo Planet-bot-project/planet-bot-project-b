@@ -17,7 +17,7 @@ async function pagination(interaction, pages, time = 30 * 1000) {
       return await interaction.editReply({
         embeds: pages,
         components: [],
-        fetchReply: true,
+        withResponse: true,
       });
     }
 
@@ -58,7 +58,7 @@ async function pagination(interaction, pages, time = 30 * 1000) {
     const msg = await interaction.editReply({
       embeds: [pages[index]],
       components: [buttons],
-      fetchReply: true,
+      withResponse: true,
     });
 
     const collector = await msg.createMessageComponentCollector({
