@@ -1,11 +1,9 @@
 const { ActivityType } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v10");
-const discord_token = process.env.token;
 
 module.exports = async (client) => {
-  //discord botへのコマンドの設定
-  const rest = new REST({ version: "10" }).setToken(discord_token);
+  const rest = new REST({ version: "10" }).setToken(process.env.token);
   (async () => {
     try {
       await rest.put(Routes.applicationCommands(client.user.id), {

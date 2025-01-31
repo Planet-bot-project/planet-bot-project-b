@@ -44,6 +44,7 @@ module.exports = async (client, interaction) => {
       }
 
       if (interaction?.type == InteractionType.MessageComponent) {
+        await interaction.reply(`customID: ${interaction?.customId}`);
       }
     }
   } catch (err) {
