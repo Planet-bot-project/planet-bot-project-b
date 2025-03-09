@@ -7,13 +7,7 @@ http
   .listen(8080);
 
 // Discord bot implements
-const {
-  Client,
-  GatewayIntentBits,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-} = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 const client = new Client({
   intents: [
