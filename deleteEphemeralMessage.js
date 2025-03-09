@@ -105,6 +105,10 @@ client.on("interactionCreate", async (interaction) => {
           await interaction.deferUpdate();
           // インタラクションの元のメッセージを削除する
           await interaction.deleteReply();
+
+          await interaction.followUp({
+            content: "Ephemeralメッセージを削除しました。",
+          });
         } else {
           await interaction.reply(`customID: ${interaction?.customId}`);
         }
