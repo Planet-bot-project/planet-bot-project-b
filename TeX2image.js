@@ -51,7 +51,8 @@ client.on("messageCreate", async (msg) => {
           "> ・!!ping\n> Pong!と返します。\n> \n" +
           "> ・!!destroy\n> botがログオフします。\n> \n" +
           "> ・!!help\n> コマンド一覧を表示します。\n> \n" +
-          "> ・!!TeX filename.type option \\`\\`\\`str\\`\\`\\`\n> TeXという記法で書かれた文字列strからflilename.typeの画像を生成します。typeはsvg,png,jpeg,webpのいずれかです。optionでは背景透過の有無を決めます。flilename.typeとoptionは省略できます。"
+          "> ・!!TeX filename.type option \\`\\`\\`str\\`\\`\\`\n> TeXという記法で書かれた文字列strからflilename.typeの画像を生成します。typeはsvg,png,jpeg,webpのいずれかです。optionでは背景透過の有無を決めます。flilename.typeとoptionは省略できます。\n" +
+          "> コマンド例）!!TeX file.png true ```a = sqrt{10}```"
       );
   } else {
     //!!TeX filetype option str
