@@ -81,8 +81,8 @@ client.on("messageCreate", async (message) => {
 
       // ↓旧embedのcolorの部分
       .setAccentColor(0xff0000)
-      // ↓埋め込みの背景にdiscordのテーマカラーがうっすら入る設定
-      .setSpoiler(true);
+      // ↓埋め込みに対してスポイラー
+      .setSpoiler(false);
 
     message.channel.send({
       components: [components],
