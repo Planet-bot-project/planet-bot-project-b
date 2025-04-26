@@ -22,6 +22,7 @@ const {
   SeparatorSpacingSize,
   ButtonBuilder,
   ButtonStyle,
+  ActionRowBuilder,
 } = require("discord.js");
 require("dotenv").config();
 const client = new Client({
@@ -122,12 +123,26 @@ client.on("messageCreate", async (message) => {
             })
           )
           .setButtonAccessory(
+            // ここは、行内にボタンを配置するものなので、ボタンは１つのみ設定可能
             new ButtonBuilder()
               .setCustomId("button1")
-              .setLabel("緑")
-              .setStyle(ButtonStyle.Success)
+              .setLabel("了承！")
+              .setStyle(ButtonStyle.Primary)
           )
-        //TODO: 複数ボタン対応
+      )
+
+      .addActionRowComponents(
+        // 1メッセージ無いのbuttonのカスタムIDは一意であるひつようがあるので、先ほどの「button1」は使えない。
+        new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+            .setCustomId("button2")
+            .setLabel("緑！")
+            .setStyle(ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId("button3")
+            .setLabel("赤！")
+            .setStyle(ButtonStyle.Danger)
+        )
       )
 
       // ↓旧embedのcolorの部分
