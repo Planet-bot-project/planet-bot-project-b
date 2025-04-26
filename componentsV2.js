@@ -10,16 +10,19 @@ http
 const {
   Client,
   GatewayIntentBits,
-  ComponentBuilder,
   ContainerBuilder,
   TextDisplayBuilder,
-  ContainerComponent,
   MessageFlags,
   SectionBuilder,
   ThumbnailBuilder,
-  ComponentType,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
+  FileBuilder,
+  SeparatorBuilder,
+  SeparatorSpacingSize,
+  ButtonBuilder,
+  ButtonStyle,
 } = require("discord.js");
-const { url } = require("inspector");
 require("dotenv").config();
 const client = new Client({
   intents: [
@@ -78,6 +81,54 @@ client.on("messageCreate", async (message) => {
             })
           )
       )
+      .addMediaGalleryComponents(
+        new MediaGalleryBuilder().addItems(
+          new MediaGalleryItemBuilder({
+            media: {
+              url: "https://images-ext-1.discordapp.net/external/xVc_jz0Y4f6HbujyiQ42xdQwynClEjfoOk9FGOoknzg/%3Fv%3D5f3a0a5f/https/i.ytimg.com/vi_webp/axZ9LYMvrPo/maxresdefault.webp?format=webp&width=756&height=426",
+            },
+          }),
+          new MediaGalleryItemBuilder({
+            media: {
+              url: "https://images-ext-1.discordapp.net/external/VbsiwWkx7xRVXlM9X-fTyEB1-COdscw1QZgqRT4j480/%3Fv%3D67eb9008/https/i.ytimg.com/vi_webp/FVBQM1Y7ukg/maxresdefault.webp?format=webp&width=756&height=426",
+            },
+          })
+        )
+      )
+      .addSeparatorComponents(
+        new SeparatorBuilder()
+          .setDivider(true) //仕切り線を表示するか(デフォルト: true)
+          .setSpacing(SeparatorSpacingSize.Large)
+      )
+      .addTextDisplayComponents(
+        new TextDisplayBuilder({
+          content: "## 添付ファイルを途中に載せる事も出来ます！",
+        })
+      )
+      .addFileComponents(
+        new FileBuilder({ file: { url: "attachment://file.png" } })
+      )
+      .addSeparatorComponents(
+        new SeparatorBuilder()
+          .setDivider(true) //仕切り線を表示するか(デフォルト: true)
+          .setSpacing(SeparatorSpacingSize.Large)
+      )
+
+      .addSectionComponents(
+        new SectionBuilder()
+          .addTextDisplayComponents(
+            new TextDisplayBuilder({
+              content: "## どのボタンが好き？",
+            })
+          )
+          .setButtonAccessory(
+            new ButtonBuilder()
+              .setCustomId("button1")
+              .setLabel("緑")
+              .setStyle(ButtonStyle.Success)
+          )
+        //TODO: 複数ボタン対応
+      )
 
       // ↓旧embedのcolorの部分
       .setAccentColor(0xff0000)
@@ -86,6 +137,12 @@ client.on("messageCreate", async (message) => {
 
     message.channel.send({
       components: [components],
+      files: [
+        {
+          attachment: "images/logo.png",
+          name: "file.png",
+        },
+      ],
       flags: MessageFlags.IsComponentsV2,
     });
   }
