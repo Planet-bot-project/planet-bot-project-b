@@ -23,6 +23,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
+  AttachmentBuilder,
 } = require("discord.js");
 require("dotenv").config();
 const client = new Client({
@@ -77,28 +78,25 @@ client.on("messageCreate", async (message) => {
           .setThumbnailAccessory(
             new ThumbnailBuilder({
               media: {
-                url: "https://media.discordapp.net/attachments/980641967694311484/1365540659917750303/maxresdefault.png?ex=680dae57&is=680c5cd7&hm=b6149e18cca077c567eeef895c222584b41d2808342a40be4967069600988547&=&format=webp&quality=lossless&width=756&height=426",
+                url: "attachment://logo.png",
               },
             })
           )
       )
       .addMediaGalleryComponents(
         new MediaGalleryBuilder().addItems(
-          new MediaGalleryItemBuilder({
-            media: {
-              url: "https://images-ext-1.discordapp.net/external/xVc_jz0Y4f6HbujyiQ42xdQwynClEjfoOk9FGOoknzg/%3Fv%3D5f3a0a5f/https/i.ytimg.com/vi_webp/axZ9LYMvrPo/maxresdefault.webp?format=webp&width=756&height=426",
-            },
-          }),
-          new MediaGalleryItemBuilder({
-            media: {
-              url: "https://images-ext-1.discordapp.net/external/VbsiwWkx7xRVXlM9X-fTyEB1-COdscw1QZgqRT4j480/%3Fv%3D67eb9008/https/i.ytimg.com/vi_webp/FVBQM1Y7ukg/maxresdefault.webp?format=webp&width=756&height=426",
-            },
-          })
+          new MediaGalleryItemBuilder({ media: { url: "attachment://1.png" } }),
+          new MediaGalleryItemBuilder({ media: { url: "attachment://2.png" } }),
+          new MediaGalleryItemBuilder({ media: { url: "attachment://3.png" } }),
+          new MediaGalleryItemBuilder({ media: { url: "attachment://4.png" } }),
+          new MediaGalleryItemBuilder({ media: { url: "attachment://5.png" } })
         )
       )
       .addSeparatorComponents(
         new SeparatorBuilder()
-          .setDivider(true) //仕切り線を表示するか(デフォルト: true)
+          // 仕切り線を表示するか(デフォルト: true)
+          .setDivider(true)
+          // 仕切り線の前後の余白の大きさを設定
           .setSpacing(SeparatorSpacingSize.Large)
       )
       .addTextDisplayComponents(
@@ -107,11 +105,13 @@ client.on("messageCreate", async (message) => {
         })
       )
       .addFileComponents(
-        new FileBuilder({ file: { url: "attachment://file.png" } })
+        new FileBuilder({ file: { url: "attachment://discord.svg" } })
       )
       .addSeparatorComponents(
         new SeparatorBuilder()
-          .setDivider(true) //仕切り線を表示するか(デフォルト: true)
+          // 仕切り線を表示するか(デフォルト: true)
+          .setDivider(true)
+          // 仕切り線の前後の余白の大きさを設定
           .setSpacing(SeparatorSpacingSize.Large)
       )
 
@@ -150,14 +150,21 @@ client.on("messageCreate", async (message) => {
       // ↓埋め込みに対してスポイラー
       .setSpoiler(false);
 
+    let attachments = [
+      new AttachmentBuilder().setFile("images/logo.png").setName("logo.png"),
+      new AttachmentBuilder().setFile("images/1.png").setName("1.png"),
+      new AttachmentBuilder().setFile("images/2.png").setName("2.png"),
+      new AttachmentBuilder().setFile("images/3.png").setName("3.png"),
+      new AttachmentBuilder().setFile("images/4.png").setName("4.png"),
+      new AttachmentBuilder().setFile("images/5.png").setName("5.png"),
+      new AttachmentBuilder()
+        .setFile("images/discord-mark-white.svg")
+        .setName("discord.svg"),
+    ];
+
     message.channel.send({
       components: [components],
-      files: [
-        {
-          attachment: "images/logo.png",
-          name: "file.png",
-        },
-      ],
+      files: attachments,
       flags: MessageFlags.IsComponentsV2,
     });
   }
