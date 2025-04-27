@@ -129,6 +129,16 @@ client.on("messageCreate", async (message) => {
               .setLabel("了承！")
               .setStyle(ButtonStyle.Primary)
           )
+          /*
+          // ここで、thumbnailを設定することも出来るが、設定した場合はbuttonAccessoryは無効になる。
+          .setThumbnailAccessory(
+            new ThumbnailBuilder({
+              media: {
+                url: "attachment://logo.png",
+              },
+            })
+          )
+          */
       )
 
       .addActionRowComponents(
@@ -171,8 +181,10 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.customId === "support") {
-    await interaction.reply("hi!!!");
+  if (interaction.customId.includes("button")) {
+    await interaction.reply(
+      `hi!!! This is button${interaction.customId.split("button")[1]}`
+    );
   }
 });
 
