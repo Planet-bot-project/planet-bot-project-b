@@ -21,7 +21,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
   ],
 });
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 //起動確認
 client.on("ready", () => {

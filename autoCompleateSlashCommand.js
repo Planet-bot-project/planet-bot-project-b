@@ -6,7 +6,7 @@ const {
   Routes,
   ActivityType,
 } = require("discord.js");
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 const TOKEN = process.env.token;
 

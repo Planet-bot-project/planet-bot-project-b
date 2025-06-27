@@ -8,7 +8,7 @@ http
 
 // Discord bot implements
 const { Client, GatewayIntentBits, ChannelType } = require("discord.js");
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,

@@ -10,7 +10,7 @@ const client = new Client({
 });
 const express = require("express");
 const app = express();
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 //機密情報取得
 const discord_token = process.env.token;

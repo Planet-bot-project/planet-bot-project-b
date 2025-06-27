@@ -8,7 +8,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
   ],
 });
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const token = process.env.token;
 
 const { Worker } = require("worker_threads");

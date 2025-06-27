@@ -18,7 +18,7 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const prefix = "pj!";
 const token = process.env.token;
 

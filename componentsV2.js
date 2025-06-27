@@ -25,7 +25,7 @@ const {
   ActionRowBuilder,
   AttachmentBuilder,
 } = require("discord.js");
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -129,7 +129,7 @@ client.on("messageCreate", async (message) => {
               .setLabel("了承！")
               .setStyle(ButtonStyle.Primary)
           )
-          /*
+        /*
           // ここで、thumbnailを設定することも出来るが、設定した場合はbuttonAccessoryは無効になる。
           .setThumbnailAccessory(
             new ThumbnailBuilder({

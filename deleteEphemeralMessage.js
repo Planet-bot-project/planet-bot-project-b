@@ -19,7 +19,7 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
   ],
 });
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 //機密情報取得
 const discord_token = process.env.token;
