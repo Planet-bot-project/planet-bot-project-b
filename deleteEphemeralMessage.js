@@ -37,7 +37,7 @@ client.commands.push(ping);
 client.commands.push(ephemeral);
 
 ///////////////////////////////////////////////////
-client.on("ready", () => {
+client.on("clientReady", () => {
   const rest = new REST({ version: "10" }).setToken(process.env.token);
   (async () => {
     try {
@@ -80,6 +80,7 @@ client.on("interactionCreate", async (interaction) => {
         switch (interaction.commandName) {
           case "ping": {
             await interaction.reply(`this is ${interaction.commandName}`);
+            break;
           }
           case "ephemeral": {
             const row = new ActionRowBuilder().addComponents(
@@ -95,6 +96,7 @@ client.on("interactionCreate", async (interaction) => {
               components: [row],
               flags: MessageFlags.Ephemeral,
             });
+            break;
           }
         }
       }

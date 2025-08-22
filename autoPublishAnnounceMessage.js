@@ -20,7 +20,7 @@ const prefix = "pj!";
 const token = process.env.token;
 
 // botが準備できれば発動され、 上から順に処理される。
-client.on("ready", () => {
+client.on("clientReady", () => {
   // コンソールにReady!!と表示
   console.log("Ready!!");
 
@@ -64,6 +64,20 @@ client.on("messageCreate", async (message) => {
         });
     } else {
       message.react("❌"); //Botに権限がない場合
+
+      setTimeout(async () => {
+				let botReactions = message.reactions.cache.filter((reaction) =>
+					reaction.users.cache.has(client.user.id)
+				);
+
+				try {
+					for (let reaction of botReactions.values()) {
+						await reaction.users.remove(client.user.id);
+					}
+				} catch (err) {
+					console.log(err);
+				}
+			}, 5000);
     }
   }
 
