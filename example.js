@@ -20,7 +20,7 @@ const prefix = "pj!";
 const token = process.env.token;
 
 // botが準備できれば発動され、 上から順に処理される。
-client.on("ready", () => {
+client.on("clientReady", () => {
   // コンソールにReady!!と表示
   console.log("Ready!!");
 

@@ -28,7 +28,7 @@ let custom = new SlashCommandBuilder()
 let ping = new SlashCommandBuilder().setName("ping").setDescription("pong!!");
 let commands = [custom, ping];
 
-client.on("ready", async () => {
+client.on("clientReady", async () => {
   //discord botへのコマンドの設定
   const rest = new REST({ version: "10" }).setToken(TOKEN);
   (async () => {

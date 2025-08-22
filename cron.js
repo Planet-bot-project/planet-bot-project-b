@@ -17,7 +17,7 @@ const client = new Client({
 require("dotenv").config({ quiet: true });
 
 //起動確認
-client.once("ready", () => {
+client.once("clientReady", () => {
   const cron = require("node-cron");
 
   cron.schedule("30 * * * * *", () => {
