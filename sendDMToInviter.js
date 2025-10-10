@@ -1,7 +1,7 @@
-const http = require("http");
+const http = require('http');
 http
-	.createServer(function (req, res) {
-		res.write("example.js is active.\nPlease check it.");
+	.createServer((req, res) => {
+		res.write('example.js is active.\nPlease check it.');
 		res.end();
 	})
 	.listen(8080);
@@ -12,8 +12,8 @@ const {
 	GatewayIntentBits,
 	PermissionsBitField,
 	AuditLogEvent,
-} = require("discord.js");
-require("dotenv").config({ quiet: true });
+} = require('discord.js');
+require('dotenv').config({ quiet: true });
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -21,26 +21,26 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 	],
 });
-const prefix = "pj!";
+const prefix = 'pj!';
 const token = process.env.token;
 
 // botが準備できれば発動され、 上から順に処理される。
-client.on("clientReady", () => {
+client.on('clientReady', () => {
 	// コンソールにReady!!と表示
-	console.log("Ready!!");
+	console.log('Ready!!');
 
 	// ステータスを設定する
 	setInterval(() => {
 		client.user.setActivity({
-			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜　Ping値は、${client.ws.ping}msです`,
+			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜ Ping値は、${client.ws.ping}msです`,
 		});
 	}, 10000);
-	client.channels.cache.get("889486664760721418").send("起動しました！");
+	client.channels.cache.get('889486664760721418').send('起動しました！');
 
 	// readyイベントここまで
 });
 
-client.on("guildCreate", async (guild) => {
+client.on('guildCreate', async (guild) => {
 	let DMuser;
 	if (
 		guild.members.me.permissions.has(PermissionsBitField.Flags.ViewAuditLog)
@@ -50,10 +50,10 @@ client.on("guildCreate", async (guild) => {
 			limit: 1,
 		});
 		const inviterInfo = fetchedLogs.entries.first().executor;
-		let inviterId = inviterInfo.id;
+		const inviterId = inviterInfo.id;
 		DMuser = await client.users.fetch(inviterId);
 	} else {
-		let owner_id = guild.ownerId;
+		const owner_id = guild.ownerId;
 		DMuser = await client.users.fetch(owner_id);
 	}
 	console.log(DMuser);
@@ -61,37 +61,37 @@ client.on("guildCreate", async (guild) => {
 });
 
 // botがメッセージを受信すると発動され、 上から順に処理される。
-client.on("messageCreate", async (message) => {
+client.on('messageCreate', (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-	const args = message.content.slice(prefix.length).trim().split(" ");
+	const args = message.content.slice(prefix.length).trim().split(' ');
 	const command = args.shift().toLowerCase();
 
-	if (command == "about") {
+	if (command === 'about') {
 		message.channel.send({
 			embeds: [
 				{
-					title: "Planet bot β (JS)について",
-					description: "node.jsで作成された、BOT開発テスト用のbotです。",
+					title: 'Planet bot β (JS)について',
+					description: 'node.jsで作成された、BOT開発テスト用のbotです。',
 					color: 3823616,
 					timestamp: new Date(),
 					thumbnail: {
-						url: "attachment://logo.png",
+						url: 'attachment://logo.png',
 					},
 					footer: {
-						text: "This bot is made by Hoshimikan6490",
-						icon_url: "attachment://me.png",
+						text: 'This bot is made by Hoshimikan6490',
+						icon_url: 'attachment://me.png',
 					},
 				},
 			],
 			files: [
 				{
-					attachment: "images/logo.png",
-					name: "logo.png",
+					attachment: 'images/logo.png',
+					name: 'logo.png',
 				},
 				{
-					attachment: "images/me.png",
-					name: "me.png",
+					attachment: 'images/me.png',
+					name: 'me.png',
 				},
 			],
 		});

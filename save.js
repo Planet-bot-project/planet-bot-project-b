@@ -1,7 +1,7 @@
-const http = require("http");
+const http = require('http');
 http
-	.createServer(function (req, res) {
-		res.write("save.js is active.\nPlease check it.");
+	.createServer((req, res) => {
+		res.write('save.js is active.\nPlease check it.');
 		res.end();
 	})
 	.listen(8080);
@@ -13,8 +13,8 @@ const {
 	ActionRowBuilder,
 	ButtonStyle,
 	InteractionType,
-} = require("discord.js");
-const discordTranscripts = require("discord-html-transcripts");
+} = require('discord.js');
+const discordTranscripts = require('discord-html-transcripts');
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -22,46 +22,46 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 	],
 });
-require("dotenv").config({ quiet: true });
+require('dotenv').config({ quiet: true });
 
 //起動確認
-client.on("clientReady", () => {
+client.on('clientReady', () => {
 	// コンソールにReady!!と表示
-	console.log("Ready!!");
+	console.log('Ready!!');
 
 	// ステータスを設定する
 	setInterval(() => {
 		client.user.setActivity({
-			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜　Ping値は、${client.ws.ping}msです`,
+			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜ Ping値は、${client.ws.ping}msです`,
 		});
 	}, 10000);
-	client.channels.cache.get("889486664760721418").send("起動しました！");
+	client.channels.cache.get('889486664760721418').send('起動しました！');
 
 	// readyイベントここまで
 });
 
 //返答
-client.on("messageCreate", async (message) => {
+client.on('messageCreate', async (message) => {
 	if (message.author.bot) {
 		return;
 	}
 
-	if (message.content == "hi") {
-		message.channel.send("hi!");
+	if (message.content === 'hi') {
+		message.channel.send('hi!');
 	}
 
-	if (message.content == "pj!save") {
+	if (message.content === 'pj!save') {
 		const options = new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
-				.setCustomId("transcript")
-				.setLabel("保存する")
+				.setCustomId('transcript')
+				.setLabel('保存する')
 				.setStyle(ButtonStyle.Secondary)
-				.setEmoji("📥")
+				.setEmoji('📥'),
 		);
 		await message.channel.send({
 			embeds: [
 				{
-					title: "save",
+					title: 'save',
 					color: 0x808080,
 				},
 			],
@@ -70,10 +70,10 @@ client.on("messageCreate", async (message) => {
 	}
 });
 
-client.on("interactionCreate", async (interaction) => {
+client.on('interactionCreate', async (interaction) => {
 	if (
-		interaction?.type == InteractionType.MessageComponent &&
-		interaction.customId == "transcript"
+		interaction?.type === InteractionType.MessageComponent &&
+		interaction.customId === 'transcript'
 	) {
 		try {
 			await interaction.deferReply();
@@ -81,7 +81,7 @@ client.on("interactionCreate", async (interaction) => {
 			const channel = interaction.channel; // or however you get your TextChannel
 			const channel_topic = channel.topic;
 			const customer_user_id = channel_topic
-				? channel_topic.substr("closed:".length)
+				? channel_topic.substr('closed:'.length)
 				: interaction.user.id;
 
 			// Must be awaited
@@ -92,14 +92,14 @@ client.on("interactionCreate", async (interaction) => {
 			await interaction.editReply({
 				embeds: [
 					{
-						title: "save",
+						title: 'save',
 						color: 0x20ff20,
 					},
 				],
 				files: [attachment],
 			});
 		} catch (error) {
-			console.error("Error creating transcript:", error);
+			console.error('Error creating transcript:', error);
 		}
 	}
 	// 該当しないインタラクションの場合は何もしない（他のハンドラーに処理を委ねる）

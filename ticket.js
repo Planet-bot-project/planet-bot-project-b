@@ -1,13 +1,13 @@
-const http = require("http");
+const http = require('http');
 http
-	.createServer(function (req, res) {
-		res.write("ticket.js is active.\nPlease check it.");
+	.createServer((req, res) => {
+		res.write('ticket.js is active.\nPlease check it.');
 		res.end();
 	})
 	.listen(8080);
 
 // Discord bot implements
-const discordTranscripts = require("discord-html-transcripts");
+const discordTranscripts = require('discord-html-transcripts');
 const {
 	Client,
 	GatewayIntentBits,
@@ -17,7 +17,7 @@ const {
 	ChannelType,
 	PermissionsBitField,
 	MessageFlags,
-} = require("discord.js");
+} = require('discord.js');
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -25,119 +25,119 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 	],
 });
-require("dotenv").config({ quiet: true });
-const prefix = "pj!";
+require('dotenv').config({ quiet: true });
+const prefix = 'pj!';
 const token = process.env.token;
 
 // botが準備できれば発動され、 上から順に処理される。
-client.on("clientReady", () => {
+client.on('clientReady', () => {
 	// コンソールにReady!!と表示
-	console.log("Ready!!");
+	console.log('Ready!!');
 
 	// ステータスを設定する
 	setInterval(() => {
 		client.user.setActivity({
-			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜　Ping値は、${client.ws.ping}msです`,
+			name: `所属サーバー数は、${client.guilds.cache.size}サーバー｜ Ping値は、${client.ws.ping}msです`,
 		});
 	}, 10000);
-	client.channels.cache.get("889486664760721418").send("起動しました！");
+	client.channels.cache.get('889486664760721418').send('起動しました！');
 
 	// readyイベントここまで
 });
 
-client.on("guildCreate", (guild) => {
-	let first_ch = guild.channels.cache.at(1);
+client.on('guildCreate', (guild) => {
+	const first_ch = guild.channels.cache.at(1);
 	first_ch.send({
 		embeds: [
 			{
-				title: "⚠注意事項とご案内⚠",
+				title: '⚠注意事項とご案内⚠',
 				description:
-					"本BOTを導入いただき、ありがとうございます。\n\n本BOTのサポートパネル作成機能は、以下の点をご確認いただいたうえでご利用ください。\n　・サポートチャンネルのチャンネルトピック([数字の羅列]かclosed:[数字羅列])は、絶対に編集しないでください。\n　・サポートチャンネルを削除した後にこちらからサポートの履歴を復旧させることはできません。\n　・お客様１人あたり１チャンネルのみ作成できます。複数のチャンネルが必要な場合は、スレッドを立てる等の対応をお願いします。",
+					'本BOTを導入いただき、ありがとうございます。\n\n本BOTのサポートパネル作成機能は、以下の点をご確認いただいたうえでご利用ください。\n　・サポートチャンネルのチャンネルトピック([数字の羅列]かclosed:[数字羅列])は、絶対に編集しないでください。\n　・サポートチャンネルを削除した後にこちらからサポートの履歴を復旧させることはできません。\n　・お客様１人あたり１チャンネルのみ作成できます。複数のチャンネルが必要な場合は、スレッドを立てる等の対応をお願いします。',
 				color: 0xff0000,
 				timestamp: new Date(),
 				thumbnail: {
-					url: "attachment://logo.png",
+					url: 'attachment://logo.png',
 				},
 				footer: {
-					text: "This bot is made by Hoshimikan6490",
-					icon_url: "attachment://me.png",
+					text: 'This bot is made by Hoshimikan6490',
+					icon_url: 'attachment://me.png',
 				},
 			},
 		],
 		files: [
 			{
-				attachment: "images/logo.png",
-				name: "logo.png",
+				attachment: 'images/logo.png',
+				name: 'logo.png',
 			},
 			{
-				attachment: "images/me.png",
-				name: "me.png",
+				attachment: 'images/me.png',
+				name: 'me.png',
 			},
 		],
 	});
 });
 
 // botがメッセージを受信すると発動され、 上から順に処理される。
-client.on("messageCreate", async (message) => {
+client.on('messageCreate', async (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-	const args = message.content.slice(prefix.length).trim().split(" ");
+	const args = message.content.slice(prefix.length).trim().split(' ');
 	const command = args.shift().toLowerCase();
 
-	if (command === "help") {
+	if (command === 'help') {
 		message.channel.send({
 			embeds: [
 				{
-					title: "Planet bot β (JS)について",
-					description: "node.jsで作成された、BOT開発テスト用のbotです。",
+					title: 'Planet bot β (JS)について',
+					description: 'node.jsで作成された、BOT開発テスト用のbotです。',
 					color: 3823616,
 					timestamp: new Date(),
 					thumbnail: {
-						url: "attachment://logo.png",
+						url: 'attachment://logo.png',
 					},
 					footer: {
-						text: "This bot is made by Hoshimikan6490",
-						icon_url: "attachment://me.png",
+						text: 'This bot is made by Hoshimikan6490',
+						icon_url: 'attachment://me.png',
 					},
 				},
 			],
 			files: [
 				{
-					attachment: "images/logo.png",
-					name: "logo.png",
+					attachment: 'images/logo.png',
+					name: 'logo.png',
 				},
 				{
-					attachment: "images/me.png",
-					name: "me.png",
+					attachment: 'images/me.png',
+					name: 'me.png',
 				},
 			],
 		});
-	} else if (command === "support_panel") {
+	} else if (command === 'support_panel') {
 		if (
 			!message.member.permissions.has(PermissionsBitField.Flags.Administrator)
 		)
 			return message.channel.send(
-				"あなたは、このサーバーの管理者権限を持っていません。\nこのコマンドの実行には管理者権限が必須です。"
+				'あなたは、このサーバーの管理者権限を持っていません。\nこのコマンドの実行には管理者権限が必須です。',
 			);
 		//権限確認
 		message.delete();
 		const help_start = new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
-				.setCustomId("support")
-				.setLabel("お問い合わせを始める")
+				.setCustomId('support')
+				.setLabel('お問い合わせを始める')
 				.setStyle(ButtonStyle.Primary)
-				.setEmoji("🎫")
+				.setEmoji('🎫'),
 		);
 		//button作る
 		await message.channel.send({
 			embeds: [
 				{
-					title: "🎫お問い合わせ🎫",
+					title: '🎫お問い合わせ🎫',
 					description:
-						"質問・要望・バグ報告がある場合は下のボタンを押してください。\nサポートチームが対応いたします。",
+						'質問・要望・バグ報告がある場合は下のボタンを押してください。\nサポートチームが対応いたします。',
 					color: 0x00eaff,
 					footer: {
-						text: "↓ここをクリックして始めてください↓",
+						text: '↓ここをクリックして始めてください↓',
 					},
 				},
 			],
@@ -145,20 +145,20 @@ client.on("messageCreate", async (message) => {
 		});
 		//embedとbutton送信
 		if (
-			message.guild.channels.cache.find((channel) => channel.name === "support")
+			message.guild.channels.cache.find((channel) => channel.name === 'support')
 		)
 			return;
 		//supportというカテゴリーがあったらreturn
 		message.guild.channels.create({
-			name: "support",
+			name: 'support',
 			type: ChannelType.GuildCategory,
 		});
 		//supportというカテゴリーを作る
 	}
 });
 
-client.on("interactionCreate", async (interaction) => {
-	if (interaction.customId === "support") {
+client.on('interactionCreate', async (interaction) => {
+	if (interaction.customId === 'support') {
 		await interaction.deferReply({
 			flags: MessageFlags.Ephemeral,
 		});
@@ -168,11 +168,11 @@ client.on("interactionCreate", async (interaction) => {
 		if (
 			interaction.guild.channels.cache.find(
 				(channel) =>
-					channel.topic === supportId && channel.type === ChannelType.GuildText
+					channel.topic === supportId && channel.type === ChannelType.GuildText,
 			)
 		) {
-			let already_channel_id = interaction.guild.channels.cache.find(
-				(channel) => channel.topic === supportId
+			const already_channel_id = interaction.guild.channels.cache.find(
+				(channel) => channel.topic === supportId,
 			).id;
 			return interaction.editReply({
 				content: `１人１チャンネルとさせていただいております。\n<#${already_channel_id}>が既に存在しますので、そちらをご利用ください。`,
@@ -183,18 +183,18 @@ client.on("interactionCreate", async (interaction) => {
 		}
 		//ギルドにユーザーIDのチャンネルがあったら処理をやめる
 		const ct = interaction.guild.channels.cache.find(
-			(name) => name.name === "support"
+			(name) => name.name === 'support',
 		);
 		//supportというカテゴリーを探す
 		if (!ct)
 			return interaction.channel.send(
-				"__**supportカテゴリーが見つかりません❕**__\nサーバーの管理者はもう一度`p!support_panel`コマンドを実行してください。"
+				'__**supportカテゴリーが見つかりません❕**__\nサーバーの管理者はもう一度`p!support_panel`コマンドを実行してください。',
 			);
 		//見つからなかったら処理しない
 		const user_name = interaction.user.username;
 		interaction.guild.channels
 			.create({
-				name: user_name + "様対応",
+				name: user_name + '様対応',
 				type: ChannelType.GuildText,
 				permissionOverwrites: [
 					{
@@ -219,20 +219,20 @@ client.on("interactionCreate", async (interaction) => {
 				//成功した場合
 				const menu = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
-						.setCustomId("menu")
-						.setLabel("メニューを開く")
+						.setCustomId('menu')
+						.setLabel('メニューを開く')
 						.setStyle(ButtonStyle.Primary)
-						.setEmoji("📚")
+						.setEmoji('📚'),
 				);
 				//buttonを作成
-				let top_message = await channels.send({
-					content: "<@" + interaction.user.id + ">様へ",
+				const top_message = await channels.send({
+					content: '<@' + interaction.user.id + '>様へ',
 					embeds: [
 						{
-							title: "📪お問い合わせありがとうございます。",
-							description: "ご用件をお書きください。",
+							title: '📪お問い合わせありがとうございます。',
+							description: 'ご用件をお書きください。',
 							footer: {
-								text: "業務連絡 ｜ 管理者は、以下のボタンでこのチャンネルを管理できます。",
+								text: '業務連絡 ｜ 管理者は、以下のボタンでこのチャンネルを管理できます。',
 							},
 							color: 0x1f6e00,
 						},
@@ -251,45 +251,45 @@ client.on("interactionCreate", async (interaction) => {
 			.catch((e) => interaction.channel.send(`エラーー:${e}`));
 	}
 
-	if (interaction.customId === "menu") {
+	if (interaction.customId === 'menu') {
 		if (
 			interaction.member.permissions.has(
-				PermissionsBitField.Flags.Administrator
+				PermissionsBitField.Flags.Administrator,
 			)
 		) {
 			const options = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
-					.setCustomId("transcript")
-					.setLabel("保存する")
+					.setCustomId('transcript')
+					.setLabel('保存する')
 					.setStyle(ButtonStyle.Secondary)
-					.setEmoji("📥"),
+					.setEmoji('📥'),
 				new ButtonBuilder()
-					.setCustomId("lock")
-					.setLabel("ロックをする")
+					.setCustomId('lock')
+					.setLabel('ロックをする')
 					.setStyle(ButtonStyle.Success)
-					.setEmoji("🔒"),
+					.setEmoji('🔒'),
 				new ButtonBuilder()
-					.setCustomId("reopen")
-					.setLabel("ロックを解除する")
+					.setCustomId('reopen')
+					.setLabel('ロックを解除する')
 					.setStyle(ButtonStyle.Success)
-					.setEmoji("🔓"),
+					.setEmoji('🔓'),
 				new ButtonBuilder()
-					.setCustomId("delete")
-					.setLabel("削除する")
+					.setCustomId('delete')
+					.setLabel('削除する')
 					.setStyle(ButtonStyle.Danger)
-					.setEmoji("⛔"),
+					.setEmoji('⛔'),
 				new ButtonBuilder()
-					.setCustomId("cancel")
-					.setLabel("メニュを閉じる")
-					.setStyle(ButtonStyle.Secondary)
+					.setCustomId('cancel')
+					.setLabel('メニュを閉じる')
+					.setStyle(ButtonStyle.Secondary),
 			);
-			let topic = interaction.channel.topic;
-			let ui = topic.replace(/[^0-9]/g, "");
+			const topic = interaction.channel.topic;
+			const ui = topic.replace(/[^0-9]/g, '');
 			await interaction.reply({
 				embeds: [
 					{
-						title: "📚｜メニュー",
-						description: `「📥保存する」で、このチャンネルのチャット履歴をhtml形式で保存できます。\n　※__**直近の100メッセージに限られます**__。\n「🔒ロックをする」で、<@${ui}> の閲覧権限を**剥奪**します\n「🔓ロック解除」で、<@${ui}> の閲覧権限を**再度付与**します。\n「⛔削除」で、このチャンネルを完全に削除します。`,
+						title: '📚｜メニュー',
+						description: `「📥保存する」で、このチャンネルのチャット履歴をhtml形式で保存できます。\n ※__**直近の100メッセージに限られます**__。\n「🔒ロックをする」で、<@${ui}> の閲覧権限を**剥奪**します\n「🔓ロック解除」で、<@${ui}> の閲覧権限を**再度付与**します。\n「⛔削除」で、このチャンネルを完全に削除します。`,
 						color: 0x40ffcc,
 					},
 				],
@@ -298,16 +298,16 @@ client.on("interactionCreate", async (interaction) => {
 		} else {
 			//管理者権限無いとき
 			await interaction.reply({
-				content: "このボタンは管理者のみ有効です",
+				content: 'このボタンは管理者のみ有効です',
 				flags: MessageFlags.Ephemeral,
 			});
 		}
 	}
 
-	if (interaction.customId === "transcript") {
+	if (interaction.customId === 'transcript') {
 		if (
 			interaction.member.permissions.has(
-				PermissionsBitField.Flags.Administrator
+				PermissionsBitField.Flags.Administrator,
 			)
 		) {
 			interaction.message.delete();
@@ -324,17 +324,17 @@ client.on("interactionCreate", async (interaction) => {
 
 			const cancel = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
-					.setCustomId("cancel")
-					.setLabel("閉じる")
-					.setStyle(ButtonStyle.Secondary)
+					.setCustomId('cancel')
+					.setLabel('閉じる')
+					.setStyle(ButtonStyle.Secondary),
 			);
 
 			await interaction.reply({
 				embeds: [
 					{
-						title: "📤｜出力しました",
+						title: '📤｜出力しました',
 						description:
-							"__**必ず、ご自身のデバイスにダウンロードしてください！**__",
+							'__**必ず、ご自身のデバイスにダウンロードしてください！**__',
 						color: 0x20ff20,
 					},
 				],
@@ -344,24 +344,24 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
-	if (interaction.customId === "lock") {
+	if (interaction.customId === 'lock') {
 		if (
 			interaction.member.permissions.has(
-				PermissionsBitField.Flags.Administrator
+				PermissionsBitField.Flags.Administrator,
 			)
 		) {
-			let ui = interaction.channel.topic;
-			if (!ui.startsWith("closed:")) {
-				interaction.channel.setTopic("closed:" + ui);
+			const ui = interaction.channel.topic;
+			if (!ui.startsWith('closed:')) {
+				interaction.channel.setTopic('closed:' + ui);
 				interaction.channel.permissionOverwrites.set(
 					[
 						{
 							id: ui,
 							deny: [PermissionsBitField.Flags.ViewChannel], // 許可しない権限
-							type: "member", // role or member
+							type: 'member', // role or member
 						},
 					],
-					"closeしたため"
+					'closeしたため',
 				);
 
 				interaction.message.delete();
@@ -369,34 +369,34 @@ client.on("interactionCreate", async (interaction) => {
 				interaction.reply({
 					embeds: [
 						{
-							title: "🔒｜closeしました！",
+							title: '🔒｜closeしました！',
 							color: 0x00ff00,
 						},
 					],
 				});
 			} else {
 				await interaction.reply({
-					content: "すでにCloseされています",
+					content: 'すでにCloseされています',
 					flags: MessageFlags.Ephemeral,
 				});
 			}
 		} else {
 			//管理者権限無いとき
 			await interaction.reply({
-				content: "このボタンは管理者のみ有効です",
+				content: 'このボタンは管理者のみ有効です',
 				flags: MessageFlags.Ephemeral,
 			});
 		}
 	}
 
-	if (interaction.customId === "reopen") {
+	if (interaction.customId === 'reopen') {
 		if (
 			interaction.member.permissions.has(
-				PermissionsBitField.Flags.Administrator
+				PermissionsBitField.Flags.Administrator,
 			)
 		) {
-			let ui = interaction.channel.topic;
-			let ui_number = ui.replace(/[^0-9]/g, "");
+			const ui = interaction.channel.topic;
+			const ui_number = ui.replace(/[^0-9]/g, '');
 			interaction.channel.setTopic(ui_number);
 			interaction.channel.permissionOverwrites.set(
 				[
@@ -409,16 +409,16 @@ client.on("interactionCreate", async (interaction) => {
 							PermissionsBitField.Flags.AttachFiles,
 							PermissionsBitField.Flags.AddReactions,
 						], // 許可する権限
-						type: "member", // role or member
+						type: 'member', // role or member
 					},
 				],
-				"reopenしたため"
+				'reopenしたため',
 			);
 			interaction.message.delete();
 			await interaction.channel.send({
 				embeds: [
 					{
-						title: "🔓｜reopenしました！",
+						title: '🔓｜reopenしました！',
 						color: 0x20ff20,
 					},
 				],
@@ -426,24 +426,24 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
-	if (interaction.customId === "delete") {
+	if (interaction.customId === 'delete') {
 		interaction.message.delete();
 		const danger_options = new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
-				.setCustomId("cancel")
-				.setLabel("やめる")
+				.setCustomId('cancel')
+				.setLabel('やめる')
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("delete_true")
-				.setLabel("完全に削除する")
-				.setStyle(ButtonStyle.Danger)
+				.setCustomId('delete_true')
+				.setLabel('完全に削除する')
+				.setStyle(ButtonStyle.Danger),
 		);
 		await interaction.channel.send({
 			embeds: [
 				{
-					title: "本当に削除してもいいですか？",
+					title: '本当に削除してもいいですか？',
 					description:
-						"この操作を実行すると、__**このチャンネルのログは永久に閲覧できなくなります**__。",
+						'この操作を実行すると、__**このチャンネルのログは永久に閲覧できなくなります**__。',
 					color: 0xff0000,
 				},
 			],
@@ -451,14 +451,14 @@ client.on("interactionCreate", async (interaction) => {
 		});
 	}
 
-	if (interaction.customId === "cancel") {
+	if (interaction.customId === 'cancel') {
 		interaction.message.delete();
 	}
 
-	if (interaction.customId === "delete_true") {
-		await interaction.reply("まもなく削除されます…");
-		let del_ch_id = interaction.channel.id;
-		let del_ch = interaction.guild.channels.cache.get(del_ch_id);
+	if (interaction.customId === 'delete_true') {
+		await interaction.reply('まもなく削除されます…');
+		const del_ch_id = interaction.channel.id;
+		const del_ch = interaction.guild.channels.cache.get(del_ch_id);
 		setTimeout(() => {
 			del_ch.delete().catch((e) => interaction.reply(`エラー:${e.message}`));
 		}, 5000);
