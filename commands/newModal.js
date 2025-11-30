@@ -16,11 +16,11 @@ module.exports = {
 
 	run: async (client, interaction) => {
 		try {
-			let modal = new ModalBuilder()
+			const modal = new ModalBuilder()
 				.setCustomId('newModal')
 				.setTitle('新しいモーダル');
 
-			let shortTextInput = new LabelBuilder()
+			const shortTextInput = new LabelBuilder()
 				.setLabel('短いテキスト入力')
 				.setDescription('ここに短いテキストを入力してください')
 				.setTextInputComponent(
@@ -34,7 +34,7 @@ module.exports = {
 						.setRequired(true),
 				);
 
-			let paragraphTextInput = new LabelBuilder()
+			const paragraphTextInput = new LabelBuilder()
 				.setLabel('段落テキスト入力')
 				.setDescription('ここに段落テキストを入力してください')
 				.setTextInputComponent(
@@ -48,7 +48,7 @@ module.exports = {
 						.setRequired(true),
 				);
 
-			let stringSelectMenu = new LabelBuilder()
+			const stringSelectMenu = new LabelBuilder()
 				.setLabel('文字列セレクトメニュー')
 				.setDescription('ここにセレクトメニューを追加してください')
 				.setStringSelectMenuComponent(
@@ -75,7 +75,7 @@ module.exports = {
 						),
 				);
 
-			let textDisplay = new TextDisplayBuilder().setContent(
+			const textDisplay = new TextDisplayBuilder().setContent(
 				'# ※これはテスト用モーダル表示コマンドであり、実行しても何も起こりません。',
 			);
 
