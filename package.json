@@ -14,7 +14,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@distube/youtube": "^1.0.4",
-		"discord-html-transcripts": "^3.2.0",
+		"discord-html-transcripts": "^3.3.0-next-5eed3d",
 		"discord.js": "^14.25.1",
 		"dotenv": "^17.3.1",
 		"express": "^5.2.1",
@@ -23,7 +23,7 @@
 		"sharp": "^0.34.5"
 	},
 	"devDependencies": {
-		"eslint": "^10.0.1",
+		"eslint": "^10.0.3",
 		"eslint-config-prettier": "^10.1.8",
 		"prettier": "^3.8.1"
 	}
